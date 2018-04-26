@@ -1,0 +1,17 @@
+<div class="card" *ngIf="cardData">
+  <div class="card-thumb">
+    <span class="claimed" *ngIf="cardData.claimed">Claimed</span>
+    <img [src]="cardData.thumb" alt="property Image" />
+  </div>
+  <div class="content">
+    <div class="title">
+      {{cardData.title}}
+    </div>
+  </div>
+  <div class="footer d-flex justify-content-around">
+    <span>
+      <i class="material-icons">create</i> Edit </span>
+    <a [href]="cardData.url" target="__blank">
+      <i class="material-icons">visibility</i> View</a>
+  </div>
+</div>

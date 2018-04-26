@@ -1,0 +1,9 @@
+<div class="row d-flex justify-content-between">
+  <div class="col card-item" *ngFor="let cardItem of overViewCardList">
+    <div *ngIf="showLoader" class="card card-placeholder">
+      <app-loader lines="4"></app-loader>
+    </div>
+    <app-card *ngIf="!showLoader" [cardData]="cardItem"></app-card>
+  </div>
+
+</div>

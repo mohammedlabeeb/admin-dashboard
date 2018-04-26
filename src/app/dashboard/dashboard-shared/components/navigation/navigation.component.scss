@@ -1,0 +1,14 @@
+@import "../../../../../assets/sass/_scss/md/_colors";
+.sidebar {
+  background: $black;
+  .simple-text {
+    color: $white;
+  }
+  .nav {
+    li {
+      &>a {
+        color: $white;
+      }
+    }
+  }
+}

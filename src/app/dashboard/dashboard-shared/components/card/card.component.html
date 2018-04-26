@@ -1,0 +1,16 @@
+<div class="card" [ngClass]="cardData.type === 'card-stats' ? 'card-stats' : ''">
+  <div class="card-header" [attr.data-background-color]="cardData.color">
+    <i class="material-icons">{{cardData.icon}}</i>
+  </div>
+  <div class="card-content">
+    <p class="category">{{cardData.category}}</p>
+    <h3 class="title">{{cardData.title}}</h3>
+  </div>
+  <div class="card-footer">
+    <div class="stats">
+      <i class="material-icons">{{cardData.footer.icon}}</i>
+      <a [href]="cardData.footer.link" *ngIf="cardData.footer.link !== '' ">{{cardData.footer.text}}</a>
+      <span *ngIf="cardData.footer.link === '' ">{{cardData.footer.text}}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="tool-box">
+  <button class="btn btn-primary pull-right" routerLink="/dashboard/users">
+    <i class="material-icons" title="back">arrow_back</i> Back</button>
+</div>
+<div class="user-view-outer d-flex">
+  <div class="col col-xs-12 col-sm-5">
+    <div *ngIf="userData" class="card">
+      <div class="card-header d-flex justify-content-between" data-background-color="primary">
+        <h4 class="title"> {{ userData.name.toUpperCase() }}</h4>
+        <span class="icons">
+          <i class="material-icons" title="verified" [ngClass]="userData.verified ? 'active' : ''">verified_user</i>
+          <i class="material-icons" title="private" [ngClass]="userData.private ? 'active' : ''">lock</i>
+        </span>
+      </div>
+      <div class="card-content">
+        <div class="item">
+          <i class="material-icons">email</i> {{ userData.email }}
+        </div>
+        <div class="item">
+          <i class="material-icons">account_circle</i> {{ userData.age }}
+        </div>
+        <div class="item">
+          <i class="material-icons">date_range</i> {{ userData.date | date : 'mediumDate' }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col col-xs-12 col-sm-7">
+    <div class="card">
+      <div class="card-header" data-background-color="primary">
+        <h4 class="title">Properties Informations</h4>
+      </div>
+      <div class="card-content">
+        <div class="row d-flex justify-content-between">
+          <div *ngFor="let proeprty of properties" class="col card-item">
+            <!-- <div class="card card-placeholder">
+              <app-loader lines="4"></app-loader>
+            </div> -->
+            <app-property-card [cardData]="proeprty"></app-property-card>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

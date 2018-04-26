@@ -1,0 +1,151 @@
+<div class="row">
+  <div class="col col-sm-10">
+    <div class="card">
+      <div class="card-header" data-background-color="primary">
+        <h4 class="title">Search Users</h4>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="form-group label-floating">
+              <label class="control-label">User Id</label>
+              <input [(ngModel)]="SUserID" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="form-group label-floating">
+              <label class="control-label">Username</label>
+              <input [(ngModel)]="SName" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group label-floating">
+              <label class="control-label">Email</label>
+              <input [(ngModel)]="SEmail" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-1">
+
+            <button class="btn btn-primary btn-round btn-just-icon" (click)="searchCustomer()" type="submit">
+              <i class="material-icons">search</i>
+              <div class="ripple-container"></div>
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col col-sm-2 add-new">
+    <button type="button" class="btn btn-primary" (click)="displayModal('#addNewModal')">
+      <i class="material-icons" title="add User">person_add</i>
+    </button>
+
+  </div>
+</div>
+<div class="card">
+  <div class="card-header" data-background-color="primary">
+    <h4 class="title">Users</h4>
+  </div>
+  <div class="card-content">
+    <div *ngIf="itemCount" class="table-outer">
+      <data-table id="persons-grid" [pagination]="pagination" headerTitle="" [items]="items" [itemCount]="itemCount" (reload)="reloadItems($event)"
+        (rowClick)="rowClick($event)" (rowDoubleClick)="rowDoubleClick($event)" [rowTooltip]="rowTooltip" [limit]="limit">
+        <data-table-column [property]="'name'" [header]="'Name'" [sortable]="true" [resizable]="true">
+        </data-table-column>
+        <data-table-column [property]="'date'" [header]="'Member Since'" [sortable]="true">
+          <ng-template #dataTableCell let-item="item">
+            <span>{{item.date | date:'mediumDate'}}</span>
+          </ng-template>
+        </data-table-column>
+        <data-table-column [property]="'claimed'" [header]="'# Claimed Properties'" [sortable]="true" width="150px">
+        </data-table-column>
+        <data-table-column [property]="'properties'" [header]="'#Scored Properties'" [sortable]="true" [visible]="true">
+        </data-table-column>
+        <data-table-column [property]="'active'" [header]="'Actions'" [width]="100" [resizable]="true">
+          <ng-template #dataTableHeader let-item="item">
+            <span>Actions</span>
+          </ng-template>
+          <ng-template #dataTableCell let-item="item">
+            <span>
+              <i routerLink="/dashboard/user/{{item.userId}}" class="material-icons" title="view">visibility</i>
+
+              <i class="material-icons" title="edit" (click)="loadEditModal(item)">create</i>
+              <i class="material-icons" title="delete" (click)="deleteConfirmation(item)">delete</i>
+            </span>
+          </ng-template>
+        </data-table-column>
+      </data-table>
+    </div>
+    <div *ngIf="!showLoader && !itemCount" class="table-outer">
+      <div class="alert alert-warning">
+        <span>No Matching Records </span>
+      </div>
+    </div>
+    <div *ngIf="showLoader" class="table-outer">
+      <app-loader lines="8"></app-loader>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Popup -->
+<app-modal [title]="addNewModal.title" [modalID]="addNewModal.id" [button]="addNewModal.button" [modalVisibility]="addModalVisibility">
+  <form class="add-new-form" #form="ngForm" (ngSubmit)="submitForm(userForm.value)">
+    <input type="hidden" [formControl]="userForm.controls['id']">
+    <div class="row">
+      <div class="col col-sm-6">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="first name" [formControl]="userForm.controls['firstName']">
+
+          <span class="alert alert-danger" *ngIf="!userForm.controls['firstName'].valid && userForm.controls['firstName'].touched">Please fill the first name</span>
+        </div>
+      </div>
+      <div class="col col-sm-6">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="last name" [formControl]="userForm.controls['lastName']">
+
+          <span class="alert alert-danger" *ngIf="!userForm.controls['lastName'].valid && userForm.controls['lastName'].touched">Please fill the last name</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-sm-8">
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="user email" [formControl]="userForm.controls['email']">
+
+          <span class="alert alert-danger" *ngIf="!userForm.controls['email'].valid && userForm.controls['email'].touched">Please fill the email</span>
+        </div>
+      </div>
+      <div class="col col-sm-4">
+        <div class="form-group">
+          <input type="number" class="form-control" placeholder="age" [formControl]="userForm.controls['age']">
+
+          <span class="alert alert-danger" *ngIf="!userForm.controls['age'].valid && userForm.controls['age'].touched">Please fill the age</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-sm-12">
+        <div class="form-group">
+
+          <input type="password" class="form-control" placeholder="password" [formControl]="userForm.controls['password']">
+          <span class="alert alert-danger" *ngIf="!userForm.controls['password'].valid && userForm.controls['password'].touched">Please fill the password</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <button type="submit" class="btn btn-default" [disabled]="!userForm.valid">Submit</button>
+      </div>
+    </div>
+  </form>
+</app-modal>
+
+<app-modal title="Delete User" modalID="DeleteUserModal" button="" [modalVisibility]="deleteModalVisibility">
+  <div class="delete-confirm">
+    <p>Are you sure you want to delete this user {{ deletingUser }}?</p>
+    <button class="btn btn-success" (click)="deleteUser(deletingUserID)">Yes</button>
+    <button class="btn btn-danger" data-dismiss="modal">No</button>
+  </div>
+</app-modal>

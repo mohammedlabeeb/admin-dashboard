@@ -1,0 +1,39 @@
+.row {
+  display: -ms-flexbox;
+  /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap;
+  /* IE10 */
+  flex-wrap: wrap;
+  &::before {
+    display: none;
+  }
+  &>div {
+    -ms-flex: 33%;
+    /* IE10 */
+    flex: 33%;
+    max-width: 360px;
+    min-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+.card-placeholder {
+  padding: 10px 25px;
+}
+
+@media (max-width: 800px) {
+  .row>div {
+    -ms-flex: 50%;
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 600px) {
+  .row>div {
+    -ms-flex: 100%;
+    flex: 100%;
+    max-width: 100%;
+  }
+}
